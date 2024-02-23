@@ -49,8 +49,26 @@ const getAllUrls = async (req, res) => {
   }
 };
 
+const getAnalytic = async (req, res) => {
+  const shortId = req.params.id;
+  try {
+    const link = await urlModal.findOne({ shortId });
+    return res.status(200).json({
+      type: "success",
+      resp: {
+        shortId: link.shortId,
+        clicks: link.visitedHistory.length,
+        visitedHistory: link.visitedHistory,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ type: "error", message: error.message });
+  }
+};
+
 module.exports = {
   createUrlShortId,
   redirectToUrl,
   getAllUrls,
+  getAnalytic,
 };
