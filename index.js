@@ -2,6 +2,7 @@ const express = require("express");
 const { urlRouter } = require("./router/url.routes");
 const connectDB = require("./connectDB");
 const { redirectToUrl } = require("./controller/url.controller");
+const authRouter = require("./router/auth.routes");
 
 const app = express();
 
@@ -10,6 +11,8 @@ connectDB("url-shortener");
 app.use(express.urlencoded({ extended: false }), express.json());
 
 app.get("/:id", redirectToUrl);
+
+app.use("/api/auth", authRouter);
 
 app.use("/api/urls", urlRouter);
 
