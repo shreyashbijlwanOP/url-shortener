@@ -42,7 +42,8 @@ const redirectToUrl = async (req, res) => {
 
 const getAllUrls = async (req, res) => {
   try {
-    const links = await urlModal.find({});
+    const { _id } = req.user;
+    const links = await urlModal.find({ _id });
     return res.status(200).json(links);
   } catch (error) {
     return res.status(500).json({ type: "error", message: error.message });
